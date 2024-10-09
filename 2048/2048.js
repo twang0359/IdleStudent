@@ -1,3 +1,11 @@
+// todo
+/**  
+ * make it look more like the actual game ie rounded borders and actual slide animation
+ * add a gameover feature when no move sliding is possible
+ * add a winner and continue message when you get your first 2048 tile
+ * an undo button
+*/
+
 var board;
 var score = 0;
 var rows = 4;
