@@ -25,6 +25,12 @@ hr{
     flex-wrap: wrap;
 }
 
+#popUp{
+    display: none;
+    background-color: red;
+    margin: 0 auto;
+}
+
 .tile{
     /* the border adds 10px, 5 up down & 5 left right */
     width: 90px;

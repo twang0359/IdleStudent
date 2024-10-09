@@ -1,7 +1,7 @@
 // todo
 /**  
  * make it look more like the actual game ie rounded borders and actual slide animation
- * add a gameover feature when no move sliding is possible
+ * add a gameover feature when no move sliding is possible maybe use the event listener or check is any moves are possible
  * add a winner and continue message when you get your first 2048 tile
  * an undo button
 */
@@ -10,6 +10,7 @@ var board;
 var score = 0;
 var rows = 4;
 var columns = 4;
+var counter = 0;
 
 window.onload = function() {
     setGame();
@@ -17,10 +18,17 @@ window.onload = function() {
 
 function setGame(){
     board = [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
+
+        // [0, 0, 0, 0],
+        // [0, 0, 0, 0],
+        // [0, 0, 0, 0],
+        // [0, 0, 0, 0]
+
+        [0, 4, 4, 2],
+        [2, 2, 2, 4],
+        [2, 4, 4, 2],
+        [4, 2, 2, 4]
+
     ]
 
     for(let r = 0; r < rows; r++){
@@ -60,9 +68,10 @@ function hasEmptyTile(){
 
 // if there's an open tile after movement then this func is called
 function setTwo(){
-    if(!hasEmptyTile()){
+    if(!hasEmptyTile()){ //if you find an empty == true which makes this if == false
         return;
     }
+
 
     let found = false;
     while(!found){
@@ -102,8 +111,34 @@ function updateTile(tile, num){
 
 }
 
+//return true if they are valid moves
+function hasValidMove(){
+    // check rows for possible moves
+    for(let r = 0; r < rows; r++){
+        for(let c = 0; c < columns - 1; c++){
+            if(board[r][c] == board[r][c+1]){
+                return true;
+            }
+        }
+    }
+    
+    // check columns for possible moves
+    for(let c = 0; c < columns; c++){
+        for(let r = 0; r < rows - 1; r++){
+            if(board[r][c] == board[r + 1][c]){
+                return true;
+            }
+        }
+    }
+}
+
 // what is an event listener??
-document.addEventListener("keyup", (e) => {
+document.addEventListener("keyup", move = (e) => {
+    //game over if no valid moves and no empty tiles
+    if(!hasValidMove() && !hasEmptyTile()){
+        gameOver();
+    }
+
     if (e.code == "ArrowLeft"){
         slideLeft();
         setTwo();
@@ -122,6 +157,7 @@ document.addEventListener("keyup", (e) => {
     }
 
     document.getElementById("score").innerText = score;
+    counter++;
 })
 
 function filterZero(row) {
@@ -134,12 +170,13 @@ function slide(row) {
 
     //slide
     for(let i = 0; i < row.length - 1; i++){
-        //check every 2
+        //check every 2 tiles
         if(row[i] == row[i + 1]){
             row[i] *= 2;
             row[i + 1] = 0;
             score += row[i];
         } // [2, 2, 2] -> [4,0,2]
+
     }
 
     row = filterZero(row); //[4, 2]
@@ -220,4 +257,10 @@ function slideDown(){
             updateTile(tile, num);
         }
     }
+}
+
+function gameOver(){
+    var popUp = document.getElementById("popUp");
+    popUp.style.display = "block"
+    document.removeEventListener("keyup", move);
 }
