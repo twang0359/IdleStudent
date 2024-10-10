@@ -3,7 +3,13 @@
  * make it look more like the actual game ie rounded borders and actual slide animation
  * add a gameover feature when no move sliding is possible maybe use the event listener or check is any moves are possible
  * add a winner and continue message when you get your first 2048 tile
- * an undo button
+ * an undo button MAYBE
+ * score message w/ current score highscore # of moves highest score(based on leaderboards)
+ * storage system
+ * leaderboards
+ * curved borders and tiles
+ * slide animations
+ * fire symbol for fast connects
 */
 
 var board;
@@ -11,6 +17,7 @@ var score = 0;
 var rows = 4;
 var columns = 4;
 var counter = 0;
+var popUp = document.getElementById("popUp");
 
 window.onload = function() {
     setGame();
@@ -18,16 +25,17 @@ window.onload = function() {
 
 function setGame(){
     board = [
-
+        // regular game
         // [0, 0, 0, 0],
         // [0, 0, 0, 0],
         // [0, 0, 0, 0],
         // [0, 0, 0, 0]
 
-        [0, 4, 4, 2],
-        [2, 2, 2, 4],
-        [2, 4, 4, 2],
-        [4, 2, 2, 4]
+        // test game over
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+        [2, 4, 2, 4],
+        [4, 2, 4, 0]
 
     ]
 
@@ -132,7 +140,7 @@ function hasValidMove(){
     }
 }
 
-// what is an event listener??
+// keyboard movement 
 document.addEventListener("keyup", move = (e) => {
     //game over if no valid moves and no empty tiles
     if(!hasValidMove() && !hasEmptyTile()){
@@ -161,7 +169,7 @@ document.addEventListener("keyup", move = (e) => {
 })
 
 function filterZero(row) {
-    return row.filter(num => num != 0); // create a new array without zeroes
+    return row.filter(num => num != 0); // create a new array without zeroes [2 , 0, 2, 0] -> [2, 2,] -> [4, 0, 0, 0]
 }
 
 function slide(row) {
@@ -259,8 +267,19 @@ function slideDown(){
     }
 }
 
+// resets score and board
 function gameOver(){
-    var popUp = document.getElementById("popUp");
-    popUp.style.display = "block"
-    document.removeEventListener("keyup", move);
+    document.getElementById("popUp").style.display = "block";
+    document.getElementById("restart").addEventListener("click", e => {
+    
+        document.getElementById("popUp").style.display = "none";
+        
+        for(let r = 0; r < rows; r++){
+            for(let c = 0; c < columns; c++){
+                board[r][c] = 0;
+            }
+        }
+    
+        score = 0;
+    })
 }
