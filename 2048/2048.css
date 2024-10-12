@@ -1,16 +1,3 @@
-/* slide animation for tiles */
-@keyframes slideInLeft{
-    /* beginning of animation or 0% completed */
-    from{
-
-    }
-
-    /* end of animation or 100% completed */
-    to{
-
-    }
-}
-
 /* text */
 body{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -45,7 +32,7 @@ hr{
 
 #popUp{
     display: none;
-    background-color: red;
+    background-color: #f4b17a; /* Semi-transparent background */
     margin: 0 auto;
     position: absolute;
     top: 40%;
@@ -58,9 +45,61 @@ hr{
 
 }
 
-#restart{
-    background-color: blue;
+#newGame{
+    display: none; /* Initially hidden */
+    background-color: #eec744; /* Semi-transparent background */
+    margin: 0 auto;
+    position: absolute; /* Or relative, depending on your layout */
+    right: 55px;
+    left: 0px;
+    width: 250px;
+    height: 50px; /* Adjust height as needed */
+    font-size: 30px; /* Change font size as needed */
+    text-align: center;
 }
+
+
+#winner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensures it appears above everything else */
+}
+
+#restart{
+    background-color: #727371;
+    color: #cdc1b5;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    height: 10px;
+    width: 50px;
+    float: right;
+    padding: 10px;
+    padding-bottom: 20px;
+
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+#restart:hover{
+    translate: translateY(-10px);
+    background-color: #bbada0;
+    color: #727371;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
 
 .tile{
     /* the border adds 10px, 5 up down & 5 left right */
@@ -74,7 +113,12 @@ hr{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: relative;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
 }
+
 
 /* following are customization of each NUMBER tile */
 /* cannot have a class name of number so adding x in front */
@@ -141,4 +185,28 @@ hr{
 .x8192{
     background-color: #ff2020;
     color: white;
+}
+
+
+/* animation to slide */
+
+.tile.slide {
+    transition: transform 0.2s ease-in-out;
+}
+
+.tile.merge {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    animation: mergeAnimation 0.3s ease;
+}
+
+@keyframes mergeAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
