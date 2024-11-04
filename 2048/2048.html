@@ -11,12 +11,21 @@
         <h1>2048</h1>
         <hr>
         <h2>Score: <span id="score">0</span></h2>
+        <div id = "restart">Restart</div>
+        <h2 style="margin-left: 75px;">Highscore: <span id="highscore">0</span></h2>
         <div id="wrapper">
             <div id="board"></div>
             <div id="popUp">
                 Game Over!
-                <div id="restart">Restart</div>
+                <div id="newGame">New Game</div>
             </div> 
+            <div id="winner" style="display:none;">
+                <div class="popup-content">
+                    <h2>Congratulations!</h2>
+                    <p>You created a 2048 tile!</p>
+                    <button id="closePopup">Close</button>
+                </div>
+            </div>
         </div>
         <script src="2048.js"></script>
     </body>

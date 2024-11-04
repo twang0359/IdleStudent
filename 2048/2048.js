@@ -1,7 +1,5 @@
 // todo
 /**  
- * make it look more like the actual game ie rounded borders and actual slide animation
- * add a gameover feature when no move sliding is possible maybe use the event listener or check is any moves are possible
  * add a winner and continue message when you get your first 2048 tile
  * an undo button MAYBE
  * score message w/ current score highscore # of moves highest score(based on leaderboards)
@@ -14,30 +12,46 @@
 
 var board;
 var score = 0;
+// !!
+var highscore = localStorage.getItem("highscore") || 0;
 var rows = 4;
 var columns = 4;
 var counter = 0;
+var restart = document.getElementById("restart");
 var popUp = document.getElementById("popUp");
+// !!
+var previousState = [];
 
 window.onload = function() {
     setGame();
+    // !!
+    updateHighscore();
 }
 
 function setGame(){
     board = [
-        // regular game
+        //regular game
         // [0, 0, 0, 0],
         // [0, 0, 0, 0],
         // [0, 0, 0, 0],
         // [0, 0, 0, 0]
 
-        // test game over
+        // test game over and restart
         [2, 4, 2, 4],
         [4, 2, 4, 2],
         [2, 4, 2, 4],
         [4, 2, 4, 0]
 
-    ]
+        //test win condition
+        //  [1024, 1024, 0, 0],
+        //  [0, 0, 0, 0],
+        //  [0, 0, 0, 0],
+        //  [0, 0, 0, 0]
+
+    ];
+
+    // !!
+    previousState = [];
 
     for(let r = 0; r < rows; r++){
         for(let c = 0; c < columns; c++){
@@ -119,6 +133,16 @@ function updateTile(tile, num){
 
 }
 
+//!! update highscore
+function updateHighscore(){
+    document.getElementById("highscore").innerText = highscore;
+}
+
+// !!
+function saveState(){
+    previousState.push(JSON.stringify(board));
+}
+
 //return true if they are valid moves
 function hasValidMove(){
     // check rows for possible moves
@@ -140,8 +164,31 @@ function hasValidMove(){
     }
 }
 
+// !! currently not working
+function undo() {
+    if(previousState.length > 0){
+        board = JSON.parse(previousState.pop());
+        score = previousState.length ? JSON.parse(previousState[previousState.length - 1]).score : 0;
+        updateBoard();
+    }
+}
+
+function updateBoard(){
+    for(let r = 0; r < rows; r++){
+        for(let c = 0; c < columns; c++){
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num);
+        }
+    }
+    document.getElementById("score").innerText = score;
+}
+
 // keyboard movement 
 document.addEventListener("keyup", move = (e) => {
+    // !! save save before move
+    saveState();
+
     //game over if no valid moves and no empty tiles
     if(!hasValidMove() && !hasEmptyTile()){
         gameOver();
@@ -162,11 +209,19 @@ document.addEventListener("keyup", move = (e) => {
     else if(e.code == "ArrowDown"){
         slideDown();
         setTwo();
+    } else if(e.code == "keyZ"){
+        undo();
     }
 
     document.getElementById("score").innerText = score;
     counter++;
 })
+
+
+
+restart.addEventListener("click", e => {
+    restartGame();
+});
 
 function filterZero(row) {
     return row.filter(num => num != 0); // create a new array without zeroes [2 , 0, 2, 0] -> [2, 2,] -> [4, 0, 0, 0]
@@ -175,6 +230,7 @@ function filterZero(row) {
 function slide(row) {
     //[0, 2, 2, 2]
     row = filterZero(row); // get rid of zeroes -> [2, 2, 2]
+    let winner = false;
 
     //slide
     for(let i = 0; i < row.length - 1; i++){
@@ -183,8 +239,12 @@ function slide(row) {
             row[i] *= 2;
             row[i + 1] = 0;
             score += row[i];
-        } // [2, 2, 2] -> [4,0,2]
 
+            if (row[i] === 2048) {
+                winner = true;
+            }
+
+        } // [2, 2, 2] -> [4,0,2]
     }
 
     row = filterZero(row); //[4, 2]
@@ -193,6 +253,10 @@ function slide(row) {
     while (row.length < columns){
         row.push(0);
     } // [4, 2, 0,0]
+
+    if(winner){
+        winGame();
+    }
 
     return row;
 }
@@ -264,22 +328,54 @@ function slideDown(){
             let num = board[r][c];
             updateTile(tile, num);
         }
+
     }
 }
 
-// resets score and board
-function gameOver(){
-    document.getElementById("popUp").style.display = "block";
-    document.getElementById("restart").addEventListener("click", e => {
-    
-        document.getElementById("popUp").style.display = "none";
-        
-        for(let r = 0; r < rows; r++){
-            for(let c = 0; c < columns; c++){
-                board[r][c] = 0;
-            }
+
+// resets board
+function restartGame(){
+
+    for(let r = 0; r < rows; r++){
+        for(let c = 0; c < columns; c++){
+            board[r][c] = 0;
         }
-    
-        score = 0;
-    })
+    }
+
+    score = 0;
+    updateBoard();
+    setTwo();
+    setTwo();
 }
+
+// lost game
+function gameOver(){
+    // !! set highscore
+    if(score > highscore){
+        highscore = score;
+        localStorage.setItem("highscore", highscore);
+    }
+
+    document.getElementById("popUp").style.display = "block";
+    document.getElementById("newGame").style.display = "block";
+    document.getElementById("newGame").addEventListener("click", e =>{
+        
+        document.getElementById("popUp").style.display = "none";
+        document.getElementById("newGame").style.display = "none";
+        restartGame();
+        updateHighscore();
+    });
+
+    // todo endgame display score and highscore in popup
+    // document.getElementById("score").innerText = score;
+    // document.getElementById("highscore").innerText = highscore;
+}
+
+function winGame(){
+    document.getElementById("winner").style.display = "flex"; // Show the pop-up
+}
+
+// Close button functionality
+document.getElementById("closePopup").addEventListener("click", function() {
+    document.getElementById("winner").style.display = "none"; // Hide the pop-up
+});
