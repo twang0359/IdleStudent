@@ -20,7 +20,7 @@ hr{
     height: 400px;
 
     background-color: #cdc1b5;
-    border: 6px solid #bbada0;
+    border: 5px solid #bbada0;
 
     /* center board */
     margin: 0 auto;
@@ -46,10 +46,10 @@ hr{
 }
 
 #newGame{
-    display: none; /* Initially hidden */
+    display: none; /* hidden */
     background-color: #eec744; /* Semi-transparent background */
     margin: 0 auto;
-    position: absolute; /* Or relative, depending on your layout */
+    position: absolute;
     right: 55px;
     left: 0px;
     width: 250px;
@@ -69,7 +69,7 @@ hr{
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000; /* Ensures it appears above everything else */
+    z-index: 1000;  /*put on top*/
 }
 
 #restart{
