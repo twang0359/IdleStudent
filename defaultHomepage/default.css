@@ -5,6 +5,7 @@ body{
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
+    background-color: black;
 }
 
 .container {
@@ -24,7 +25,7 @@ body{
 .gameName {
     margin-top: 8px;
     font-size: 16px;
-    color: #333;
+    color: white;
     font-weight: bold;
 }
 
@@ -35,5 +36,5 @@ body{
     width: 100%;
     font-size: 100px;
     font-weight: bold;
-    color: #a71818;
+    color: white;
 }
