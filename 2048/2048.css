@@ -46,10 +46,17 @@ hr{
 }
 
 #newGame{
+<<<<<<< HEAD
     display: none; /* hidden */
     background-color: #eec744; /* Semi-transparent background */
     margin: 0 auto;
     position: absolute;
+=======
+    display: none; /* Initially hidden */
+    background-color: #eec744; /* Semi-transparent background */
+    margin: 0 auto;
+    position: absolute; /* Or relative, depending on your layout */
+>>>>>>> refs/remotes/origin/main
     right: 55px;
     left: 0px;
     width: 250px;
@@ -69,7 +76,11 @@ hr{
     display: flex;
     align-items: center;
     justify-content: center;
+<<<<<<< HEAD
     z-index: 1000;  /*put on top*/
+=======
+    z-index: 1000; /* Ensures it appears above everything else */
+>>>>>>> refs/remotes/origin/main
 }
 
 #restart{
