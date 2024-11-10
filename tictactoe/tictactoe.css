@@ -1,0 +1,102 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    text-align: center;
+    background-color: #191919;
+}
+
+#playersTurns {
+    height: 80px;
+    width: 170px;
+    display: grid;
+    margin: auto;
+}
+
+/*Adjust the turn container underneath text "Whose turn"*/
+#playersTurns h2 {
+    color: whitesmoke;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#gameBoard {
+    justify-content: center;
+    grid-template-columns: repeat(3, 250px);
+    gap: 3px; /*Creating gaps between the cells*/
+    display: grid;
+    margin: auto;
+    padding-top: 25px;
+}
+
+.cell {
+    cursor: pointer;
+    width: 250px;
+    height: 250px;
+    background-color: navajowhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 150px;
+}
+
+.turnContainer {/*to indicate whose turn it is*/
+    border: 2px solid;
+    border-color: whitesmoke;
+    border-radius: 5px;
+    padding: 10px;
+    width: 70px;
+    margin: 0 3px;
+    transition: border-color 0.3s;
+}
+
+#P1, #P2 {
+    font-size: 15px;
+    color: whitesmoke;
+}
+
+.active {/*for the container border and highlight color*/
+    border-color: whitesmoke;
+    background-color: green;
+}
+
+.displayResults {
+    display: none; /*Hide result display*/
+    color: Green;
+    font-weight: bold;
+    font-size: 25px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.buttons{
+    justify-content: space-between;
+    
+}
+
+#restartGame{ /*Restart button*/
+    cursor: pointer;
+    background-color: red;
+    font-weight: bold;
+    border-radius: 20px;
+    color: goldenrod;  
+    border-color: whitesmoke;
+    font-size: 20px;
+    padding: 7px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#modeChange{/*Button to change mode*/
+    cursor: pointer;
+    background-color: green;
+    font-weight: bold;
+    border-radius: 20px;
+    color: goldenrod;  
+    border-color: whitesmoke;
+    font-size: 20px;
+    padding: 7px;
+   font-family: 'Courier New', Courier, monospace;
+}

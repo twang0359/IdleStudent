@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>IdleStudent | Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="tictactoe.css">
+
+</head>
+<body>
+
+    <div class="Player's_TurnContainer" id="playersTurns">
+        <!--Highlight whose turn it is-->
+        <h2>Whose Turn</h2>
+        <div class="turnContainer" id="P1">P1 (X)</div>
+        <div class="turnContainer" id="P2">P2 (O)</div>
+    </div>
+
+    <br>
+
+    <div class="Board" id="gameBoard">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+   
+    </div>
+
+    <br>
+
+    <div class="displayResults" id="resultsDisplayed"></div>
+
+    <div class="buttons">
+        <button id ="modeChange" title= "Change oppenent AI or other Player">MODE</button>
+        <button id ="restartGame" title = "Restart game">RESET</button>
+    </div>
+    
+    <script src="tictactoe.js"></script>
+</body>
+</html>

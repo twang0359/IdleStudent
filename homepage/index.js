@@ -3,11 +3,11 @@ document.getElementById("game1").addEventListener("click", e => {
      window.location.href = '../2048/2048.html';  
   });
   document.getElementById("game2").addEventListener("click", e => {
-    window.location.href = '';  
+    window.location.href = '../pong/pong/html';  
   });
   document.getElementById("game3").addEventListener("click", e => {
-    window.location.href = '';  
+    window.location.href = '../tictactoe/tictactoe.html';  
   });
   document.getElementById("game4").addEventListener("click", e => {
-    window.location.href = '';  
+    window.location.href = '../brickbreaker/brickbreaker.html';  
   });
